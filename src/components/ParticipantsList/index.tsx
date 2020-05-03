@@ -9,6 +9,7 @@ interface ParticipantProps {
 export const ParticipantsList = ({ participants }: ParticipantProps) => {
   return (
     <List spacing={3} mt={4}>
+      <p>Participants</p>
       {participants.map((participant) => {
         return (
           <ListItem
