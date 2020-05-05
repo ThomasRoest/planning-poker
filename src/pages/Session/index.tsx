@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Button } from "@chakra-ui/core";
+import { Box, Button, Heading } from "@chakra-ui/core";
 import { gql } from "apollo-boost";
 import { useQuery, useMutation, useSubscription } from "@apollo/react-hooks";
 import { useHistory, useParams } from "react-router";
@@ -7,6 +7,17 @@ import { JoinSessionForm } from "../../components/JoinSessionForm";
 import { VoteForm } from "../../components/VoteForm";
 import { ParticipantsList } from "../../components/ParticipantsList";
 import { VoteResults } from "../../components/VoteResults";
+import { boxShadow } from "./styles";
+
+const boxStyles = {
+  w: "50%",
+  m: "auto",
+  mt: 5,
+  bg: "white",
+  boxShadow: boxShadow,
+  borderRadius: "3px",
+  p: 4,
+};
 
 export interface Participant {
   id: number;
@@ -67,7 +78,7 @@ export const SessionPage = () => {
   const { loading, error, data } = useSubscription(SUBSCRIBE_SESSION, {
     variables: { uid },
   });
-  const [resetVotes, state] = useMutation<any>(RESET_VOTES);
+  const [resetVotes, loadingState] = useMutation<any>(RESET_VOTES);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :( {JSON.stringify(error)} </p>;
@@ -77,33 +88,19 @@ export const SessionPage = () => {
   return (
     <div>
       {!userId && (
-        <Box
-          w="50%"
-          m="auto"
-          mt={5}
-          border="1px solid lightgrey"
-          borderRadius="3px"
-          p={4}
-        >
-          <h3>Session: {session.title}</h3>
-          <h3>Session ID: {session.id}</h3>
-
+        <Box {...boxStyles}>
+          <Heading as="h1" color="gray.500" mb={4}>
+            {session.title}
+          </Heading>
           <JoinSessionForm sessionId={session.id} setUserId={setUserId} />
         </Box>
       )}
-
       {userId && (
         <>
-          <Box
-            w="50%"
-            m="auto"
-            mt={5}
-            border="1px solid lightgrey"
-            borderRadius="3px"
-            p={4}
-          >
-            <h3>Session: {session.title}</h3>
-            <h3>Session ID: {session.id}</h3>
+          <Box {...boxStyles}>
+            <Heading as="h1" color="gray.500" mb={4}>
+              {session.title}
+            </Heading>
             <h3>user: {userId}</h3>
             <Button
               mb={4}
@@ -116,14 +113,7 @@ export const SessionPage = () => {
             <VoteForm userId={userId} />
             <ParticipantsList participants={session.participants} />
           </Box>
-          <Box
-            w="50%"
-            m="auto"
-            mt={5}
-            border="1px solid lightgrey"
-            borderRadius="3px"
-            p={4}
-          >
+          <Box {...boxStyles}>
             <VoteResults session={session} />
           </Box>
         </>

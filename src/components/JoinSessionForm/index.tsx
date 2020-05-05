@@ -63,7 +63,6 @@ export const JoinSessionForm = ({
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <Heading>Join this session</Heading>
         <FormControl isRequired>
           <FormLabel htmlFor="name">Name</FormLabel>
           <Input

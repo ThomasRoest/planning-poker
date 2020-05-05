@@ -3,6 +3,7 @@ import { Button, FormControl, FormLabel, Input } from "@chakra-ui/core";
 import { gql } from "apollo-boost";
 import { useMutation } from "@apollo/react-hooks";
 import { useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const CREATE_SESSION = gql`
   mutation createSession($title: String) {
@@ -28,6 +29,7 @@ export const NewSessionForm = () => {
   const onMutationCompleted = (response: any) => {
     const uid = response.insert_sessions.returning[0].uid;
     history.push(`/session/${uid}`);
+    toast.success("session created");
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -37,7 +39,7 @@ export const NewSessionForm = () => {
     });
   };
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <p>Loading... --> waking up heroku free tier</p>;
   if (error) return <p>Error :( {JSON.stringify(error)} </p>;
 
   return (

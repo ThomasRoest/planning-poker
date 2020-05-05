@@ -19,9 +19,11 @@
     "emotion-theming": "^10.0.27",
     "graphql": "^15.0.0",
     "react": "^16.13.1",
+    "react-confetti": "^5.0.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
+    "react-toastify": "^5.5.0",
     "subscriptions-transport-ws": "^0.9.16",
     "typescript": "~3.7.2"
   },

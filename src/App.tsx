@@ -7,6 +7,8 @@ import { ThemeProvider, ColorModeProvider } from "@chakra-ui/core";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { ApolloProvider } from "@apollo/react-hooks";
 import { createApolloClient } from "./apollo-client";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const apolloClient = createApolloClient();
 
@@ -27,6 +29,7 @@ const App = () => (
                 </Route>
               </Switch>
             </div>
+            <ToastContainer />
           </Layout>
         </Router>
       </ColorModeProvider>

@@ -8,7 +8,7 @@ const wsLink = new WebSocketLink({
     reconnect: true,
     connectionParams: {
       headers: {
-        "x-hasura-access-key": process.env.REACT_APP_GRAPHQL_API_KEY,
+        "X-Hasura-Role": "anonymous",
       },
     },
   },

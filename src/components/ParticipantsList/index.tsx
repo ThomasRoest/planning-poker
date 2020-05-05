@@ -13,7 +13,11 @@ export const ParticipantsList = ({ participants }: ParticipantProps) => {
       {participants.map((participant) => {
         return (
           <ListItem
-            p={1}
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+            borderRadius="3px"
+            padding=".5rem .5rem"
             key={participant.id}
             bg={participant.vote ? "green.100" : "white"}
           >
