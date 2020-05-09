@@ -4,67 +4,69 @@ import {
   FormControl,
   Input,
   FormLabel,
-  Heading,
+  useToast,
+  Box,
 } from "@chakra-ui/core";
 import { gql } from "apollo-boost";
 import { useMutation } from "@apollo/react-hooks";
-import { GET_SESSION } from "../../pages/Session";
-import { useParams } from "react-router";
+import { LoadingCube } from "../LoadingCube";
+import { UserContext } from "../../userContext";
 
 interface JoinSessionFormProps {
   sessionId: number;
-  setUserId: (value: number) => void;
 }
 
-const CREATE_PARTICIPANT = gql`
+export const CREATE_PARTICIPANT = gql`
   mutation createParticipant($name: String, $sessionId: Int) {
     insert_participants(objects: [{ name: $name, session_id: $sessionId }]) {
       affected_rows
       returning {
         id
+        name
       }
     }
   }
 `;
 
-export const JoinSessionForm = ({
-  sessionId,
-  setUserId,
-}: JoinSessionFormProps) => {
+export const JoinSessionForm = ({ sessionId }: JoinSessionFormProps) => {
   const [name, setName] = React.useState("");
-  let { uid } = useParams();
+  const { setUser } = React.useContext(UserContext);
+  const toast = useToast();
   const [createParticipant, { error, loading }] = useMutation<any>(
-    CREATE_PARTICIPANT,
-    {
-      onCompleted: (data) => onMutationCompleted(data),
-      refetchQueries: [
-        {
-          query: GET_SESSION,
-          variables: { uid },
-        },
-      ],
-    }
+    CREATE_PARTICIPANT
   );
 
-  const onMutationCompleted = ({ insert_participants }: any) => {
-    setUserId(insert_participants.returning[0].id);
-  };
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    createParticipant({
+
+    const { data }: any = await createParticipant({
       variables: { name, sessionId },
+    });
+
+    const participant = data.insert_participants.returning[0];
+    setUser({ id: participant.id, name: participant.name });
+
+    toast({
+      title: "Joined session",
+      status: "success",
+      duration: 3000,
+      position: "top-right",
     });
   };
 
-  if (loading) return <p>Loading...</p>;
+  if (loading)
+    return (
+      <Box width="50%">
+        <LoadingCube />
+      </Box>
+    );
   if (error) return <p>Error :( {JSON.stringify(error)} </p>;
 
   return (
     <>
       <form onSubmit={handleSubmit}>
         <FormControl isRequired>
-          <FormLabel htmlFor="name">Name</FormLabel>
+          <FormLabel htmlFor="name">Enter name to join this session</FormLabel>
           <Input
             id="name"
             placeholder="Name"

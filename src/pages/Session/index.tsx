@@ -1,13 +1,13 @@
 import React from "react";
-import { Box, Button, Heading } from "@chakra-ui/core";
+import { Box, Button, Heading, Badge, Flex } from "@chakra-ui/core";
 import { gql } from "apollo-boost";
-import { useQuery, useMutation, useSubscription } from "@apollo/react-hooks";
-import { useHistory, useParams } from "react-router";
+import { useMutation, useSubscription } from "@apollo/react-hooks";
+import { useParams } from "react-router";
 import { JoinSessionForm } from "../../components/JoinSessionForm";
 import { VoteForm } from "../../components/VoteForm";
 import { ParticipantsList } from "../../components/ParticipantsList";
-import { VoteResults } from "../../components/VoteResults";
 import { boxShadow } from "./styles";
+import { UserContext } from "../../userContext";
 
 const boxStyles = {
   w: "50%",
@@ -18,12 +18,6 @@ const boxStyles = {
   borderRadius: "3px",
   p: 4,
 };
-
-export interface Participant {
-  id: number;
-  name: string;
-  vote: number;
-}
 
 export const RESET_VOTES = gql`
   mutation reset_votes($sessionId: Int) {
@@ -74,34 +68,40 @@ export const SUBSCRIBE_SESSION = gql`
 
 export const SessionPage = () => {
   const { uid } = useParams();
-  const [userId, setUserId] = React.useState<number | null>(null);
+  const { user } = React.useContext(UserContext);
+
   const { loading, error, data } = useSubscription(SUBSCRIBE_SESSION, {
     variables: { uid },
   });
   const [resetVotes, loadingState] = useMutation<any>(RESET_VOTES);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Box width="50%">Loading..</Box>;
   if (error) return <p>Error :( {JSON.stringify(error)} </p>;
 
   const session = data.sessions[0];
 
   return (
     <div>
-      {!userId && (
+      {!user && (
         <Box {...boxStyles}>
-          <Heading as="h1" color="gray.500" mb={4}>
+          <Heading as="h1" color="gray.500" mb={2}>
             {session.title}
           </Heading>
-          <JoinSessionForm sessionId={session.id} setUserId={setUserId} />
+          <JoinSessionForm sessionId={session.id} />
         </Box>
       )}
-      {userId && (
+      {user && (
         <>
           <Box {...boxStyles}>
-            <Heading as="h1" color="gray.500" mb={4}>
+            <Heading as="h1" color="gray.500" mb={3}>
               {session.title}
             </Heading>
-            <h3>user: {userId}</h3>
+            <Flex alignItems="center" mb={4}>
+              user:
+              <Badge bg="teal.100" ml={2}>
+                {user.name}
+              </Badge>
+            </Flex>
             <Button
               mb={4}
               onClick={() =>
@@ -110,11 +110,11 @@ export const SessionPage = () => {
             >
               reset
             </Button>
-            <VoteForm userId={userId} />
-            <ParticipantsList participants={session.participants} />
-          </Box>
-          <Box {...boxStyles}>
-            <VoteResults session={session} />
+            <VoteForm userId={user.id} />
+            <ParticipantsList
+              participants={session.participants}
+              session={session}
+            />
           </Box>
         </>
       )}

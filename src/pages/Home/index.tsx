@@ -1,7 +1,7 @@
 import React from "react";
 import { Box } from "@chakra-ui/core";
 import { Heading } from "@chakra-ui/core";
-import { NewSessionForm } from "../../components/NewSessionForm";
+import { CreateSessionForm } from "../../components/CreateSessionForm";
 
 export const Home = () => {
   return (
@@ -15,7 +15,7 @@ export const Home = () => {
       mt={4}
     >
       <Heading mb={4}>Create new session</Heading>
-      <NewSessionForm />
+      <CreateSessionForm />
     </Box>
   );
 };
