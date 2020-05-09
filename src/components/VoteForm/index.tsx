@@ -1,6 +1,6 @@
 import React from "react";
 import { VoteOptionsGrid } from "./styles";
-import { Button } from "@chakra-ui/core";
+import { Button, Box } from "@chakra-ui/core";
 import { gql } from "apollo-boost";
 import { useMutation } from "@apollo/react-hooks";
 
@@ -21,7 +21,7 @@ const CREATE_VOTE = gql`
 `;
 
 export const VoteForm = ({ userId }: VoteFormProps) => {
-  const [createVote, { error, loading }] = useMutation<any>(CREATE_VOTE);
+  const [createVote] = useMutation<any>(CREATE_VOTE);
 
   const submit = (vote: number) => {
     createVote({
@@ -32,7 +32,7 @@ export const VoteForm = ({ userId }: VoteFormProps) => {
   const options = [0, 0.5, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 15, 18, 20];
 
   return (
-    <div>
+    <Box>
       <VoteOptionsGrid>
         {options.map((option) => {
           return (
@@ -47,6 +47,6 @@ export const VoteForm = ({ userId }: VoteFormProps) => {
           );
         })}
       </VoteOptionsGrid>
-    </div>
+    </Box>
   );
 };

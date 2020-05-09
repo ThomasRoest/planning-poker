@@ -42,12 +42,12 @@ export const JoinSessionForm = ({ sessionId }: JoinSessionFormProps) => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    // const { data }: any = await createParticipant({
-    //   variables: { name, sessionId },
-    // });
+    const { data }: any = await createParticipant({
+      variables: { name, sessionId, owner: false },
+    });
 
-    // const participant = data.insert_participants.returning[0];
-    // setUser({ id: participant.id, name: participant.name });
+    const participant = data.insert_participants.returning[0];
+    setUser({ id: participant.id, name: participant.name });
 
     toast({
       title: "Joined session",

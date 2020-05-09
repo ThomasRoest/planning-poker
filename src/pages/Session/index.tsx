@@ -1,5 +1,13 @@
 import React from "react";
-import { Box, Button, Heading, Badge, Flex } from "@chakra-ui/core";
+import {
+  Box,
+  Button,
+  Heading,
+  Badge,
+  Flex,
+  IconButton,
+  Tooltip,
+} from "@chakra-ui/core";
 import { gql } from "apollo-boost";
 import { useMutation, useSubscription } from "@apollo/react-hooks";
 import { useParams } from "react-router";
@@ -9,8 +17,8 @@ import { ParticipantsList } from "../../components/ParticipantsList";
 import { boxShadow } from "./styles";
 import { UserContext } from "../../userContext";
 
-const boxStyles = {
-  w: "50%",
+export const boxStyles = {
+  maxWidth: "650px",
   m: "auto",
   mt: 5,
   bg: "white",
@@ -61,6 +69,7 @@ export const SUBSCRIBE_SESSION = gql`
         id
         name
         vote
+        owner
       }
     }
   }
@@ -73,7 +82,7 @@ export const SessionPage = () => {
   const { loading, error, data } = useSubscription(SUBSCRIBE_SESSION, {
     variables: { uid },
   });
-  const [resetVotes, loadingState] = useMutation<any>(RESET_VOTES);
+  const [resetVotes] = useMutation<any>(RESET_VOTES);
 
   if (loading) return <Box width="50%">Loading..</Box>;
   if (error) return <p>Error :( {JSON.stringify(error)} </p>;
@@ -93,9 +102,14 @@ export const SessionPage = () => {
       {user && (
         <>
           <Box {...boxStyles}>
-            <Heading as="h1" color="gray.500" mb={3}>
-              {session.title}
-            </Heading>
+            <Flex justifyContent="space-between" align="center">
+              <Heading as="h1" color="gray.500" mb={3}>
+                {session.title}
+              </Heading>
+              <Tooltip label="Share url" aria-label="share">
+                <IconButton aria-label="Copy" icon="copy" />
+              </Tooltip>
+            </Flex>
             <Flex alignItems="center" mb={4}>
               user:
               <Badge bg="teal.100" ml={2}>
@@ -108,13 +122,10 @@ export const SessionPage = () => {
                 resetVotes({ variables: { sessionId: session.id } })
               }
             >
-              reset
+              Reset
             </Button>
             <VoteForm userId={user.id} />
-            <ParticipantsList
-              participants={session.participants}
-              session={session}
-            />
+            <ParticipantsList session={session} />
           </Box>
         </>
       )}

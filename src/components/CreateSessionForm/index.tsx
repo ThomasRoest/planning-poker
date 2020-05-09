@@ -50,8 +50,8 @@ export const CreateSessionForm = () => {
       },
     });
 
-    const { id, name } = result.data.insert_participants.returning[0];
-    setUser({ id, name });
+    const { id, name, owner } = result.data.insert_participants.returning[0];
+    setUser({ id, name, owner });
 
     history.push(`/session/${session.data.insert_sessions.returning[0].uid}`);
 
