@@ -31,9 +31,7 @@ const CREATE_SESSION = gql`
 export const CreateSessionForm = () => {
   const history = useHistory();
   const toast = useToast();
-
   const { setUser } = React.useContext(UserContext);
-
   const [title, setTitle] = React.useState("");
   const [username, setUsername] = React.useState("");
   const [createSession, { error, loading }] = useMutation<any>(CREATE_SESSION);
@@ -48,6 +46,7 @@ export const CreateSessionForm = () => {
       variables: {
         name: username,
         sessionId: session.data.insert_sessions.returning[0].id,
+        owner: true,
       },
     });
 

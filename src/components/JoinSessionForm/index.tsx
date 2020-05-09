@@ -17,12 +17,15 @@ interface JoinSessionFormProps {
 }
 
 export const CREATE_PARTICIPANT = gql`
-  mutation createParticipant($name: String, $sessionId: Int) {
-    insert_participants(objects: [{ name: $name, session_id: $sessionId }]) {
+  mutation createParticipant($name: String, $sessionId: Int, $owner: Boolean) {
+    insert_participants(
+      objects: [{ name: $name, session_id: $sessionId, owner: $owner }]
+    ) {
       affected_rows
       returning {
         id
         name
+        owner
       }
     }
   }
@@ -39,12 +42,12 @@ export const JoinSessionForm = ({ sessionId }: JoinSessionFormProps) => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const { data }: any = await createParticipant({
-      variables: { name, sessionId },
-    });
+    // const { data }: any = await createParticipant({
+    //   variables: { name, sessionId },
+    // });
 
-    const participant = data.insert_participants.returning[0];
-    setUser({ id: participant.id, name: participant.name });
+    // const participant = data.insert_participants.returning[0];
+    // setUser({ id: participant.id, name: participant.name });
 
     toast({
       title: "Joined session",
