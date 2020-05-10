@@ -7,6 +7,7 @@ import {
   Flex,
   IconButton,
   Tooltip,
+  useToast,
 } from "@chakra-ui/core";
 import { gql } from "apollo-boost";
 import { useMutation, useSubscription } from "@apollo/react-hooks";
@@ -16,6 +17,7 @@ import { VoteForm } from "../../components/VoteForm";
 import { ParticipantsList } from "../../components/ParticipantsList";
 import { boxShadow } from "./styles";
 import { UserContext } from "../../userContext";
+import copy from "copy-to-clipboard";
 
 export const boxStyles = {
   maxWidth: "650px",
@@ -78,6 +80,7 @@ export const SUBSCRIBE_SESSION = gql`
 export const SessionPage = () => {
   const { uid } = useParams();
   const { user } = React.useContext(UserContext);
+  const toast = useToast();
 
   const { loading, error, data } = useSubscription(SUBSCRIBE_SESSION, {
     variables: { uid },
@@ -88,6 +91,17 @@ export const SessionPage = () => {
   if (error) return <p>Error :( {JSON.stringify(error)} </p>;
 
   const session = data.sessions[0];
+
+  const copyToClipboard = () => {
+    const url = window.location.href;
+    copy(url);
+    toast({
+      title: "Copied to clipboard",
+      status: "info",
+      duration: 3000,
+      position: "top-right",
+    });
+  };
 
   return (
     <div>
@@ -107,7 +121,11 @@ export const SessionPage = () => {
                 {session.title}
               </Heading>
               <Tooltip label="Share url" aria-label="share">
-                <IconButton aria-label="Copy" icon="copy" />
+                <IconButton
+                  aria-label="Copy"
+                  icon="copy"
+                  onClick={copyToClipboard}
+                />
               </Tooltip>
             </Flex>
             <Flex alignItems="center" mb={4}>
