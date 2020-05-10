@@ -4,7 +4,7 @@ import { WebSocketLink } from "apollo-link-ws";
 import { onError } from "apollo-link-error";
 
 const wsLink = new WebSocketLink({
-  uri: `ws://planning-poker678.herokuapp.com/v1/graphql`,
+  uri: `wss://planning-poker678.herokuapp.com/v1/graphql`,
   options: {
     reconnect: true,
     connectionParams: {
