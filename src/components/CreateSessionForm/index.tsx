@@ -66,8 +66,9 @@ export const CreateSessionForm = () => {
 
   if (loading)
     return (
-      <Box width="50%">
+      <Box>
         <LoadingCube />
+        creating new session..
       </Box>
     );
   if (error) return <p>Error :( {JSON.stringify(error)} </p>;
