@@ -48,6 +48,16 @@ export const ParticipantsList = ({ session }: ParticipantProps) => {
     consensus = votes.every((val, i, arr) => val === arr[0]);
   }
 
+  // React.useEffect(() => {
+  //   showConfetti()
+  //   const id = setTimeout(() => {
+  //   }, 3000);
+  //   console.log("show confetti");
+  //   return () => {
+  //     clearTimeout(id);
+  //   };
+  // }, []);
+
   if (result) {
     return (
       <Flex align="center" justifyContent="space-between" mt={5}>
