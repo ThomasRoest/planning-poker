@@ -48,24 +48,28 @@ export const ParticipantsList = ({ session }: ParticipantProps) => {
     consensus = votes.every((val, i, arr) => val === arr[0]);
   }
 
-  // React.useEffect(() => {
-  //   showConfetti()
-  //   const id = setTimeout(() => {
-  //   }, 3000);
-  //   console.log("show confetti");
-  //   return () => {
-  //     clearTimeout(id);
-  //   };
-  // }, []);
-
   if (result) {
     return (
       <Flex align="center" justifyContent="space-between" mt={5}>
         <Box>
           <List styleType="none">
             {session.participants.map((participant) => {
-              const content = `${participant.name}: ${participant.vote}`;
-              return <ListItem key={participant.id}>{content}</ListItem>;
+              const content = (
+                <>
+                  <span>{participant.name}</span>
+                  <span>{participant.vote}</span>
+                </>
+              );
+              return (
+                <ListItem
+                  display="flex"
+                  minWidth="120px"
+                  justifyContent="space-between"
+                  key={participant.id}
+                >
+                  {content}
+                </ListItem>
+              );
             })}
           </List>
         </Box>
