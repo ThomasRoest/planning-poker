@@ -116,10 +116,12 @@ export const SessionPage = () => {
       {user && (
         <>
           <Box {...boxStyles}>
-            <Flex justifyContent="space-between" align="center">
-              <Heading as="h1" color="gray.500" mb={3}>
-                {session.title}
-              </Heading>
+            <Flex justifyContent="space-between" align="center" mb=".5rem">
+              <div>
+                <Heading as="h1" color="gray.500" mb={3} display="inline">
+                  {session.title}
+                </Heading>
+              </div>
               <Tooltip label="Share url" aria-label="share">
                 <IconButton
                   aria-label="Copy"
@@ -129,10 +131,7 @@ export const SessionPage = () => {
               </Tooltip>
             </Flex>
             <Flex alignItems="center" mb={4}>
-              user:
-              <Badge bg="teal.100" ml={2}>
-                {user.name}
-              </Badge>
+              <Badge bg="teal.100">{user.name}</Badge>
             </Flex>
             <Button
               mb={4}
