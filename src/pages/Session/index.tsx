@@ -80,12 +80,12 @@ export const SUBSCRIBE_SESSION = gql`
 export const SessionPage = () => {
   const { uid } = useParams();
   const { user } = React.useContext(UserContext);
-  const toast = useToast();
-
   const { loading, error, data } = useSubscription(SUBSCRIBE_SESSION, {
     variables: { uid },
   });
   const [resetVotes] = useMutation<any>(RESET_VOTES);
+
+  const toast = useToast();
 
   if (loading) return <Box width="50%">Loading..</Box>;
   if (error) return <p>Error :( {JSON.stringify(error)} </p>;
