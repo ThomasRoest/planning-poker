@@ -141,7 +141,7 @@ export const SessionPage = () => {
             >
               Reset
             </Button>
-            <VoteForm userId={user.id} />
+            <VoteForm userId={user.id} participants={session.participants} />
             <ParticipantsList session={session} />
           </Box>
         </>
