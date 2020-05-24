@@ -77,7 +77,7 @@ export const ParticipantsList = ({ session }: ParticipantProps) => {
           {consensus && (
             <Heading as="h3" color="green.500" size="md">
               Consensus!
-              <Confetti />
+              <Confetti numberOfPieces={100} />
             </Heading>
           )}
           <Stat>
