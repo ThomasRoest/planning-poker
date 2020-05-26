@@ -42,7 +42,7 @@ export const VoteForm = ({ userId, participants }: VoteFormProps) => {
     });
   };
 
-  const options = [0, 0.5, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 15, 18, 20];
+  const options = [0, 0.5, 1, 2, 3, 5, 8, 13, 20, 40, 100];
 
   return (
     <Box>
