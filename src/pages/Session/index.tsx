@@ -33,27 +33,11 @@ export const RESET_VOTES = gql`
   mutation reset_votes($sessionId: Int) {
     update_participants(
       where: { session_id: { _eq: $sessionId } }
-      _set: { vote: null }
+      _set: { vote: null, priority: null }
     ) {
       affected_rows
       returning {
         id
-        vote
-      }
-    }
-  }
-`;
-
-export const GET_SESSION = gql`
-  query getSession($uid: uuid) {
-    sessions(where: { uid: { _eq: $uid } }) {
-      id
-      title
-      created_at
-      uid
-      participants {
-        id
-        name
         vote
       }
     }
@@ -72,6 +56,7 @@ export const SUBSCRIBE_SESSION = gql`
         name
         vote
         owner
+        priority
       }
     }
   }
@@ -84,7 +69,6 @@ export const SessionPage = () => {
     variables: { uid },
   });
   const [resetVotes] = useMutation<any>(RESET_VOTES);
-
   const toast = useToast();
 
   if (loading) return <Box width="50%">Loading..</Box>;

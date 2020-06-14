@@ -10,8 +10,8 @@ import {
   Stat,
   StatLabel,
   StatNumber,
-  Text,
   IconButton,
+  Icon,
 } from "@chakra-ui/core";
 import Confetti from "react-confetti";
 import { gql } from "apollo-boost";
@@ -55,14 +55,36 @@ export const ParticipantsList = ({ session }: ParticipantProps) => {
           <List styleType="none">
             {session.participants.map((participant) => {
               const content = (
-                <>
+                <Box w="180px" display="flex" justifyContent="space-between">
                   <span>{participant.name}</span>
-                  <span>{participant.vote}</span>
-                </>
+                  <Box minW="45px">
+                    {participant.vote}
+                    {participant.priority && (
+                      <span>
+                        {participant.priority === "HIGH" ? (
+                          <Icon
+                            name="arrow-up"
+                            size="16px"
+                            color="red.500"
+                            ml={1}
+                          />
+                        ) : (
+                          <Icon
+                            name="arrow-down"
+                            size="16px"
+                            color="green.500"
+                            ml={1}
+                          />
+                        )}
+                      </span>
+                    )}
+                  </Box>
+                </Box>
               );
               return (
                 <ListItem
                   display="flex"
+                  mb={1}
                   minWidth="120px"
                   justifyContent="space-between"
                   key={participant.id}
@@ -90,10 +112,11 @@ export const ParticipantsList = ({ session }: ParticipantProps) => {
   } else {
     return (
       <List spacing={3} mt={4}>
-        <Text fontSize="md">Participants</Text>
+        <hr />
         {session.participants.map((participant) => {
           return (
             <ListItem
+              mb={1}
               display="flex"
               justifyContent="space-between"
               alignItems="center"
@@ -102,7 +125,7 @@ export const ParticipantsList = ({ session }: ParticipantProps) => {
               key={participant.id}
               bg={participant.vote === null ? "white" : "green.100"}
             >
-              {participant.name}
+              <span>{participant.name}</span>
 
               <Flex align="center">
                 {participant.vote !== null && (

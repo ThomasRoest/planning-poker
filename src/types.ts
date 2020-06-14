@@ -2,6 +2,7 @@ export interface IParticipant {
   id: number;
   name: string;
   vote: number;
+  priority: string;
 }
 
 export interface ISession {
