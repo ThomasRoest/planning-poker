@@ -48,7 +48,7 @@ export const ParticipantsList = ({ session }: ParticipantProps) => {
     consensus = votes.every((val, i, arr) => val === arr[0]);
   }
 
-  if (result) {
+  if (typeof result === "number") {
     return (
       <Flex align="center" justifyContent="space-between" mt={5}>
         <Box>
