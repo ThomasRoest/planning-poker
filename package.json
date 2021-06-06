@@ -53,6 +53,7 @@
   "devDependencies": {
     "@testing-library/cypress": "^7.0.3",
     "@types/react-router": "^5.1.5",
-    "@types/react-router-dom": "^5.1.4"
+    "@types/react-router-dom": "^5.1.4",
+    "history": "^5.0.0"
   }
 }
