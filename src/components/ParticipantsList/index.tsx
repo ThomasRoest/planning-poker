@@ -1,6 +1,5 @@
 import React from "react";
 import { ISession } from "../../types";
-
 import Confetti from "react-confetti";
 import { UserContext } from "../../userContext";
 import { gql, useMutation } from "@apollo/client";
@@ -8,7 +7,6 @@ import {
   Flex,
   Box,
   List,
-  Icon,
   ListItem,
   Heading,
   Stat,
