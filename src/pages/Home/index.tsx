@@ -1,6 +1,5 @@
+import { Box, Heading } from "@chakra-ui/react";
 import React from "react";
-import { Box } from "@chakra-ui/core";
-import { Heading } from "@chakra-ui/core";
 import { CreateSessionForm } from "../../components/CreateSessionForm";
 import { boxStyles } from "../Session";
 

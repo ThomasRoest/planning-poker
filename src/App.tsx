@@ -2,13 +2,17 @@ import React from "react";
 import { Layout } from "./components/Layout";
 import { Home } from "./pages/Home";
 import { SessionPage } from "./pages/Session";
-import { CSSReset, LightMode } from "@chakra-ui/core";
-import { ThemeProvider, ColorModeProvider } from "@chakra-ui/core";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { ApolloProvider } from "@apollo/react-hooks";
 import { createApolloClient } from "./apollo-client";
 import { UserContext } from "./userContext";
 import About from "./pages/About";
+import { ApolloProvider } from "@apollo/client";
+import {
+  ChakraProvider,
+  ColorModeProvider,
+  CSSReset,
+  LightMode,
+} from "@chakra-ui/react";
 
 const apolloClient = createApolloClient();
 
@@ -17,7 +21,7 @@ const App = () => {
   return (
     <UserContext.Provider value={{ user, setUser }}>
       <ApolloProvider client={apolloClient}>
-        <ThemeProvider>
+        <ChakraProvider>
           <ColorModeProvider>
             <LightMode>
               <Router>
@@ -40,7 +44,7 @@ const App = () => {
               </Router>
             </LightMode>
           </ColorModeProvider>
-        </ThemeProvider>
+        </ChakraProvider>
       </ApolloProvider>
     </UserContext.Provider>
   );

@@ -1,5 +1,5 @@
-import { InMemoryCache } from "apollo-cache-inmemory";
-import { ApolloClient } from "apollo-client";
+
+import { ApolloClient, InMemoryCache } from "@apollo/client";
 import { WebSocketLink } from "apollo-link-ws";
 
 const wsLink = new WebSocketLink({
@@ -16,7 +16,7 @@ const wsLink = new WebSocketLink({
 
 export const createApolloClient = () => {
   return new ApolloClient({
-    link: wsLink,
+    link: (wsLink as any),
     cache: new InMemoryCache(),
   });
 };

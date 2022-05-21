@@ -1,22 +1,22 @@
 import React from "react";
 import { ISession } from "../../types";
+
+import Confetti from "react-confetti";
+import { UserContext } from "../../userContext";
+import { gql, useMutation } from "@apollo/client";
 import {
-  List,
-  ListItem,
-  ListIcon,
-  Box,
   Flex,
+  Box,
+  List,
+  Icon,
+  ListItem,
   Heading,
   Stat,
   StatLabel,
   StatNumber,
   IconButton,
-  Icon,
-} from "@chakra-ui/core";
-import Confetti from "react-confetti";
-import { gql } from "apollo-boost";
-import { useMutation } from "@apollo/react-hooks";
-import { UserContext } from "../../userContext";
+} from "@chakra-ui/react";
+import { ArrowDownIcon, ArrowUpIcon, CheckCircleIcon, DeleteIcon } from "@chakra-ui/icons";
 
 const DELETE_USER = gql`
   mutation createParticipant($id: Int!) {
@@ -62,16 +62,12 @@ export const ParticipantsList = ({ session }: ParticipantProps) => {
                     {participant.priority && (
                       <span>
                         {participant.priority === "HIGH" ? (
-                          <Icon
-                            name="arrow-up"
-                            size="16px"
+                          <ArrowUpIcon
                             color="red.500"
                             ml={1}
                           />
                         ) : (
-                          <Icon
-                            name="arrow-down"
-                            size="16px"
+                          <ArrowDownIcon
                             color="green.500"
                             ml={1}
                           />
@@ -126,10 +122,9 @@ export const ParticipantsList = ({ session }: ParticipantProps) => {
               bg={participant.vote === null ? "white" : "green.100"}
             >
               <span>{participant.name}</span>
-
               <Flex align="center">
                 {participant.vote !== null && (
-                  <ListIcon icon="check-circle" color="green.500" />
+                  <CheckCircleIcon color="green.500" />
                 )}
                 {user.owner && (
                   <IconButton
@@ -137,8 +132,8 @@ export const ParticipantsList = ({ session }: ParticipantProps) => {
                       deleteUser({ variables: { id: participant.id } })
                     }
                     variant="outline"
-                    aria-label="Send email"
-                    icon="delete"
+                    aria-label="delete"
+                    icon={<DeleteIcon />}
                   />
                 )}
               </Flex>

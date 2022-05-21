@@ -1,17 +1,8 @@
 import React from "react";
-import {
-  Button,
-  FormControl,
-  Input,
-  FormLabel,
-  useToast,
-  Box,
-} from "@chakra-ui/core";
-import { gql } from "apollo-boost";
-import { useMutation } from "@apollo/react-hooks";
 import { LoadingCube } from "../LoadingCube";
 import { UserContext } from "../../userContext";
-
+import { gql, useMutation } from "@apollo/client";
+import { Box, Button, FormControl, FormLabel, Input, useToast } from "@chakra-ui/react";
 interface JoinSessionFormProps {
   sessionId: number;
 }
@@ -77,7 +68,7 @@ export const JoinSessionForm = ({ sessionId }: JoinSessionFormProps) => {
               setName(e.target.value)
             }
           />
-          <Button type="submit" mt={4} variantColor="teal">
+          <Button type="submit" mt={4} colorScheme="teal">
             Join session
           </Button>
         </FormControl>

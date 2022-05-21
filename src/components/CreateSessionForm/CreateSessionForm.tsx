@@ -1,18 +1,10 @@
 import React from "react";
-import {
-  Button,
-  FormControl,
-  FormLabel,
-  Input,
-  useToast,
-  Box,
-} from "@chakra-ui/core";
-import { gql } from "apollo-boost";
-import { useMutation } from "@apollo/react-hooks";
 import { useHistory } from "react-router-dom";
 import { LoadingCube } from "../LoadingCube";
 import { CREATE_PARTICIPANT } from "../JoinSessionForm";
 import { UserContext } from "../../userContext";
+import { gql, useMutation } from "@apollo/client";
+import { useToast, Box, FormControl, FormLabel, Input, Button } from "@chakra-ui/react";
 
 const CREATE_SESSION = gql`
   mutation createSession($title: String) {
@@ -95,7 +87,7 @@ export const CreateSessionForm = () => {
           }
         />
       </FormControl>
-      <Button type="submit" variantColor="teal" mt={4}>
+      <Button type="submit" colorScheme="teal" mt={4}>
         create new session
       </Button>
     </form>

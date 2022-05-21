@@ -2,7 +2,7 @@ import React from "react";
 import { AppHeader } from "../AppHeader";
 import { StyledLayout } from "./styles";
 import { AppFooter } from "../AppFooter";
-import { Box } from "@chakra-ui/core";
+import { Box } from "@chakra-ui/react";
 
 export const Layout = ({ children }: { children: React.ReactNode }) => {
   return (

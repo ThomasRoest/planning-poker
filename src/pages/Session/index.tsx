@@ -1,16 +1,4 @@
 import React from "react";
-import {
-  Box,
-  Button,
-  Heading,
-  Badge,
-  Flex,
-  IconButton,
-  Tooltip,
-  useToast,
-} from "@chakra-ui/core";
-import { gql } from "apollo-boost";
-import { useMutation, useSubscription } from "@apollo/react-hooks";
 import { useParams } from "react-router";
 import { JoinSessionForm } from "../../components/JoinSessionForm";
 import { VoteForm } from "../../components/VoteForm";
@@ -18,6 +6,18 @@ import { ParticipantsList } from "../../components/ParticipantsList";
 import { boxShadow } from "./styles";
 import { UserContext } from "../../userContext";
 import copy from "copy-to-clipboard";
+import { gql, useMutation, useSubscription } from "@apollo/client";
+import {
+  Badge,
+  Box,
+  Button,
+  Flex,
+  Heading,
+  IconButton,
+  Tooltip,
+  useToast,
+} from "@chakra-ui/react";
+import { CopyIcon } from "@chakra-ui/icons";
 
 export const boxStyles = {
   maxWidth: "650px",
@@ -63,11 +63,12 @@ export const SUBSCRIBE_SESSION = gql`
 `;
 
 export const SessionPage = () => {
-  const { uid } = useParams();
+  const { uid } = useParams<{ uid: string }>();
   const { user } = React.useContext(UserContext);
   const { loading, error, data } = useSubscription(SUBSCRIBE_SESSION, {
     variables: { uid },
   });
+
   const [resetVotes] = useMutation<any>(RESET_VOTES);
   const toast = useToast();
 
@@ -108,8 +109,8 @@ export const SessionPage = () => {
               </div>
               <Tooltip label="Share url" aria-label="share">
                 <IconButton
-                  aria-label="Copy"
-                  icon="copy"
+                  aria-label="Copy url"
+                  icon={<CopyIcon />}
                   onClick={copyToClipboard}
                 />
               </Tooltip>

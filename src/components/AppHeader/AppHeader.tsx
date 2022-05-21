@@ -1,10 +1,9 @@
 import React from "react";
 import { StyledHeader } from "./styles";
 import { Link } from "react-router-dom";
-import { Heading, Flex, Box } from "@chakra-ui/core";
+import { Box, Flex, Heading } from "@chakra-ui/react";
 
 export const AppHeader = () => {
-  // const { user, setUser } = React.useContext(UserContext);
   return (
     <StyledHeader>
       <Box w="75%" margin="auto">

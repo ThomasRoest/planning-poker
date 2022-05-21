@@ -1,5 +1,5 @@
+import { theme } from "@chakra-ui/react";
 import styled from "@emotion/styled";
-import { theme } from "@chakra-ui/core";
 
 export const StyledFooter = styled.footer`
   padding: 1rem;

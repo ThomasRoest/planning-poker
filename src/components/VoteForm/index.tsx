@@ -1,9 +1,12 @@
 import React from "react";
 import { VoteOptionsGrid } from "./styles";
-import { Button, Box, Icon } from "@chakra-ui/core";
-import { gql } from "apollo-boost";
-import { useMutation } from "@apollo/react-hooks";
 import { IParticipant } from "../../types";
+import { gql, useMutation } from "@apollo/client";
+import { Box, Button } from "@chakra-ui/react";
+import {
+  ArrowDownIcon,
+  ArrowUpIcon,
+} from "@chakra-ui/icons";
 
 interface VoteFormProps {
   userId: number;
@@ -79,7 +82,7 @@ export const VoteForm = ({ userId, participants }: VoteFormProps) => {
             <Button
               key={option}
               size="sm"
-              variantColor={activeVote === option ? "teal" : "gray"}
+              colorScheme={activeVote === option ? "teal" : "gray"}
               onClick={() => submit(option)}
             >
               {option} points
@@ -93,30 +96,30 @@ export const VoteForm = ({ userId, participants }: VoteFormProps) => {
         </Box>
         <Button
           size="sm"
-          mr={3}
+          rightIcon={
+            <ArrowDownIcon
+              color={activePriority === "LOW" ? "white" : "green.500"}
+            />
+          }
+          colorScheme={activePriority === "LOW" ? "teal" : "gray"}
+          variant="solid"
+          mr={2}
           onClick={() => handleSetPriority("LOW")}
-          variantColor={activePriority === "LOW" ? "teal" : "gray"}
         >
           low
-          <Icon
-            name="arrow-down"
-            size="16px"
-            color={activePriority === "LOW" ? "white" : "green.500"}
-            ml={2}
-          />
         </Button>
         <Button
           size="sm"
+          rightIcon={
+            <ArrowUpIcon
+              color={activePriority === "HIGH" ? "white" : "red.500"}
+            />
+          }
+          colorScheme={activePriority === "HIGH" ? "teal" : "gray"}
+          variant="solid"
           onClick={() => handleSetPriority("HIGH")}
-          variantColor={activePriority === "HIGH" ? "teal" : "gray"}
         >
           high
-          <Icon
-            name="arrow-up"
-            size="16px"
-            color={activePriority === "HIGH" ? "white" : "red.500"}
-            ml={2}
-          />
         </Button>
       </Box>
     </Box>
