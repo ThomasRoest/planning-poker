@@ -1,17 +1,14 @@
 import React from "react";
 import { AppHeader } from "../AppHeader";
-import { StyledLayout } from "./styles";
 import { AppFooter } from "../AppFooter";
-import { Box } from "@chakra-ui/react";
+import { Container, Grid } from "@chakra-ui/react";
 
 export const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <StyledLayout>
+    <Grid templateRows="auto 1fr auto" height="calc(100vh)">
       <AppHeader />
-      <Box as="main" flex="1" bg="gray.50">
-        {children}
-      </Box>
+      <Container maxW="container.lg">{children}</Container>
       <AppFooter />
-    </StyledLayout>
+    </Grid>
   );
 };

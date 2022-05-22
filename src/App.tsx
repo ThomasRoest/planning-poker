@@ -7,12 +7,7 @@ import { createApolloClient } from "./apollo-client";
 import { UserContext } from "./userContext";
 import About from "./pages/About";
 import { ApolloProvider } from "@apollo/client";
-import {
-  ChakraProvider,
-  ColorModeProvider,
-  CSSReset,
-  LightMode,
-} from "@chakra-ui/react";
+import { ChakraProvider } from "@chakra-ui/react";
 
 const apolloClient = createApolloClient();
 
@@ -22,28 +17,21 @@ const App = () => {
     <UserContext.Provider value={{ user, setUser }}>
       <ApolloProvider client={apolloClient}>
         <ChakraProvider>
-          <ColorModeProvider>
-            <LightMode>
-              <Router>
-                <Layout>
-                  <CSSReset />
-                  <div>
-                    <Switch>
-                      <Route path="/session/:uid">
-                        <SessionPage />
-                      </Route>
-                      <Route path="/about">
-                        <About />
-                      </Route>
-                      <Route path="/">
-                        <Home />
-                      </Route>
-                    </Switch>
-                  </div>
-                </Layout>
-              </Router>
-            </LightMode>
-          </ColorModeProvider>
+          <Router>
+            <Layout>
+              <Switch>
+                <Route path="/session/:uid">
+                  <SessionPage />
+                </Route>
+                <Route path="/about">
+                  <About />
+                </Route>
+                <Route path="/">
+                  <Home />
+                </Route>
+              </Switch>
+            </Layout>
+          </Router>
         </ChakraProvider>
       </ApolloProvider>
     </UserContext.Provider>

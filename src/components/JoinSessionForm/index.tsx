@@ -2,9 +2,19 @@ import React from "react";
 import { LoadingCube } from "../LoadingCube";
 import { UserContext } from "../../userContext";
 import { gql, useMutation } from "@apollo/client";
-import { Box, Button, FormControl, FormLabel, Input, useToast } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  FormControl,
+  FormLabel,
+  Heading,
+  Input,
+  useColorModeValue,
+  useToast,
+} from "@chakra-ui/react";
 interface JoinSessionFormProps {
   sessionId: number;
+  title: string;
 }
 
 export const CREATE_PARTICIPANT = gql`
@@ -22,13 +32,12 @@ export const CREATE_PARTICIPANT = gql`
   }
 `;
 
-export const JoinSessionForm = ({ sessionId }: JoinSessionFormProps) => {
+export const JoinSessionForm = ({ sessionId, title }: JoinSessionFormProps) => {
   const [name, setName] = React.useState("");
   const { setUser } = React.useContext(UserContext);
   const toast = useToast();
-  const [createParticipant, { error, loading }] = useMutation<any>(
-    CREATE_PARTICIPANT
-  );
+  const [createParticipant, { error, loading }] =
+    useMutation<any>(CREATE_PARTICIPANT);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -48,16 +57,27 @@ export const JoinSessionForm = ({ sessionId }: JoinSessionFormProps) => {
     });
   };
 
+  const borderColor = useColorModeValue("gray.300", "gray.600");
+
   if (loading)
     return (
       <Box width="50%">
         <LoadingCube />
       </Box>
     );
-  if (error) return <p>Error :( {JSON.stringify(error)} </p>;
+  
+    if (error) return <p>Error : {JSON.stringify(error)} </p>;
 
   return (
-    <>
+    <Box
+      border="1px"
+      borderColor={borderColor}
+      padding="5"
+      borderRadius="3"
+    >
+      <Heading as="h1" color="gray.500" mb={2}>
+            {title}
+          </Heading>
       <form onSubmit={handleSubmit}>
         <FormControl isRequired>
           <FormLabel htmlFor="name">Enter name to join this session</FormLabel>
@@ -73,6 +93,6 @@ export const JoinSessionForm = ({ sessionId }: JoinSessionFormProps) => {
           </Button>
         </FormControl>
       </form>
-    </>
+    </Box>
   );
 };

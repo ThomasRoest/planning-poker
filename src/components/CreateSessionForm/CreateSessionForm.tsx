@@ -4,7 +4,16 @@ import { LoadingCube } from "../LoadingCube";
 import { CREATE_PARTICIPANT } from "../JoinSessionForm";
 import { UserContext } from "../../userContext";
 import { gql, useMutation } from "@apollo/client";
-import { useToast, Box, FormControl, FormLabel, Input, Button } from "@chakra-ui/react";
+import {
+  useToast,
+  Box,
+  FormControl,
+  FormLabel,
+  Input,
+  Button,
+  Heading,
+  useColorModeValue,
+} from "@chakra-ui/react";
 
 const CREATE_SESSION = gql`
   mutation createSession($title: String) {
@@ -56,6 +65,8 @@ export const CreateSessionForm = () => {
     });
   };
 
+  const borderColor = useColorModeValue("gray.300", "gray.600");
+
   if (loading)
     return (
       <Box>
@@ -66,30 +77,40 @@ export const CreateSessionForm = () => {
   if (error) return <p>Error :( {JSON.stringify(error)} </p>;
 
   return (
-    <form onSubmit={handleSubmit}>
-      <FormControl isRequired mb={4}>
-        <FormLabel htmlFor="title">Session title</FormLabel>
-        <Input
-          id="title"
-          placeholder="Title"
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setTitle(e.target.value)
-          }
-        />
-      </FormControl>
-      <FormControl isRequired>
-        <FormLabel htmlFor="username">Username</FormLabel>
-        <Input
-          id="username"
-          placeholder="Username"
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setUsername(e.target.value)
-          }
-        />
-      </FormControl>
-      <Button type="submit" colorScheme="teal" mt={4}>
-        create new session
-      </Button>
-    </form>
+    <Box
+      border="1px"
+      borderColor={borderColor}
+      padding="5"
+      borderRadius="3"
+    >
+      <Heading size="lg" mb={4}>
+        Create new session
+      </Heading>
+      <form onSubmit={handleSubmit}>
+        <FormControl isRequired mb={4}>
+          <FormLabel htmlFor="title">Session title</FormLabel>
+          <Input
+            id="title"
+            placeholder="Title"
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setTitle(e.target.value)
+            }
+          />
+        </FormControl>
+        <FormControl isRequired>
+          <FormLabel htmlFor="username">Username</FormLabel>
+          <Input
+            id="username"
+            placeholder="Username"
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setUsername(e.target.value)
+            }
+          />
+        </FormControl>
+        <Button type="submit" colorScheme="teal" mt={4}>
+          create new session
+        </Button>
+      </form>
+    </Box>
   );
 };

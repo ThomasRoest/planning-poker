@@ -13,6 +13,7 @@ import {
   StatLabel,
   StatNumber,
   IconButton,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { ArrowDownIcon, ArrowUpIcon, CheckCircleIcon, DeleteIcon } from "@chakra-ui/icons";
 
@@ -45,6 +46,9 @@ export const ParticipantsList = ({ session }: ParticipantProps) => {
     result = Math.round(total / session.participants.length);
     consensus = votes.every((val, i, arr) => val === arr[0]);
   }
+
+  const listItemColor = useColorModeValue('green.100', 'green.700')
+  const checkIconColor = useColorModeValue('green.500', 'green.300')
 
   if (typeof result === "number") {
     return (
@@ -117,12 +121,12 @@ export const ParticipantsList = ({ session }: ParticipantProps) => {
               borderRadius="3px"
               padding=".5rem .5rem"
               key={participant.id}
-              bg={participant.vote === null ? "white" : "green.100"}
+              bg={participant.vote === null ? void 0 : listItemColor}
             >
               <span>{participant.name}</span>
               <Flex align="center">
                 {participant.vote !== null && (
-                  <CheckCircleIcon color="green.500" />
+                  <CheckCircleIcon width="10" color={checkIconColor} />
                 )}
                 {user.owner && (
                   <IconButton
