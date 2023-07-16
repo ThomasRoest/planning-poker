@@ -1,6 +1,5 @@
 import React from "react";
 import { Layout } from "./components/Layout";
-import { Home } from "./pages/Home";
 import { SessionPage } from "./pages/Session";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { createApolloClient } from "./apollo-client";
@@ -8,6 +7,9 @@ import { UserContext } from "./userContext";
 import About from "./pages/About";
 import { ApolloProvider } from "@apollo/client";
 import { ChakraProvider } from "@chakra-ui/react";
+import Login from "./pages/Login";
+import { AuthContextProvider, PrivateRoute } from "./components/Auth/AuthProvider";
+import { CreateSession } from "./pages/CreateSession";
 
 const apolloClient = createApolloClient();
 
@@ -17,21 +19,26 @@ const App = () => {
     <UserContext.Provider value={{ user, setUser }}>
       <ApolloProvider client={apolloClient}>
         <ChakraProvider>
-          <Router>
-            <Layout>
-              <Switch>
-                <Route path="/session/:uid">
-                  <SessionPage />
-                </Route>
-                <Route path="/about">
-                  <About />
-                </Route>
-                <Route path="/">
-                  <Home />
-                </Route>
-              </Switch>
-            </Layout>
-          </Router>
+          <AuthContextProvider>
+            <Router>
+              <Layout>
+                <Switch>
+                  <PrivateRoute path="/create-session">
+                    <CreateSession />
+                  </PrivateRoute>
+                  <Route path="/session/:uid">
+                    <SessionPage />
+                  </Route>
+                  <Route path="/about">
+                    <About />
+                  </Route>
+                  <Route path="/">
+                    <Login />
+                  </Route>
+                </Switch>
+              </Layout>
+            </Router>
+          </AuthContextProvider>
         </ChakraProvider>
       </ApolloProvider>
     </UserContext.Provider>
